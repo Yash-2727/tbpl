@@ -1,0 +1,9 @@
+Version 1.4.4 checks:
+- Node.js syntax validation passed for all JavaScript files.
+- Source inspection confirms duplicate decisions use exact source-file hashes only; perceptual whole-scene hashing is removed from the upload workflow.
+- Exact same-file repeats are blocked only at Analyze All; similar backgrounds/camera angles/pad patterns are not treated as duplicates.
+- Automatic detector thresholds and working resolution were updated for pale pads and greater image variation.
+- Manual pad marking remains available when automatic detection cannot identify all seven pads.
+- A strip-region boundary and numbered pad centres are shown in the analysis overlay.
+- ZIP integrity is checked after packaging.
+- Automated end-to-end browser interaction could not be completed in this environment. Test with Live Server before operational use, particularly with pale pads, rotated strips and three distinct photographs taken against the same background.

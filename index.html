@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>THE BLUE PAPER LAB | Field Strip Analysis</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand-mark">TBPL</div>
+    <div><strong>THE BLUE PAPER LAB</strong><small>FIELD TESTING APPLICATION · AQUARIUM 7-IN-1</small></div>
+    <div class="top-actions"><span class="status-dot"></span><span>Local workspace</span></div>
+  </header>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="nav-label">WORKSPACE</div>
+      <button class="nav active" data-view="testing">◉ <span>New test</span></button>
+      <button class="nav" data-view="records">▤ <span>Test records</span></button>
+      <button class="nav" data-view="charts">▦ <span>Reference charts</span></button>
+      <button class="nav" data-view="guide">ⓘ <span>How it works</span></button>
+      <div class="side-note"><b>Phase 1 prototype</b><p>Image-assisted screening. Confirm results using validated methods before issuing compliance decisions.</p></div>
+      <div class="side-foot">Version 1.4.5 · Browser storage</div>
+    </aside>
+
+    <main class="main">
+      <section id="view-testing" class="view">
+        <div class="page-heading">
+          <div><div class="eyebrow">FIELD WORKFLOW / 01</div><h1>New strip analysis</h1><p>Aquarium Test Strips 7-in-1 · Three reacted strips · Seven parameters.</p></div>
+          <div class="pill">● Draft workspace</div>
+        </div>
+
+        <div class="grid two">
+          <article class="panel">
+            <div class="panel-head"><div><h2>Sample information</h2><p>Identify the water sample and strip profile.</p></div><span class="step">01</span></div>
+            <div class="form-grid">
+              <label>Sample ID<input id="sampleId" placeholder="Auto-generated"></label>
+              <label>Testing date<input id="testingDate" type="date"></label>
+              <label>Customer / site<input id="customer" placeholder="Customer or location name"></label>
+              <label>Technician<input id="technician" placeholder="Technician name"></label>
+              <label>Water source<select id="waterSource"><option>Household tap</option><option>Borewell</option><option>Open well</option><option>Municipal</option><option>Aquarium</option><option>River / lake</option><option>Agricultural</option><option>Other</option></select></label>
+              <label>Pincode<input id="pincode" inputmode="numeric" placeholder="6-digit pincode"></label>
+              <label class="span2">Location / village<input id="location" placeholder="Village, taluka, district"></label>
+              <label>Manufacturer<select id="manufacturer"></select></label>
+              <label>Strip model<select id="stripModel"></select></label>
+            </div>
+            <div class="inline-actions"><button class="btn secondary" id="getLocation">Use device GPS</button><span id="gpsStatus" class="muted">GPS not captured</span></div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-head"><div><h2>Reference profile</h2><p>Chart selected for colour-to-concentration comparison.</p></div><span class="step">02</span></div>
+            <div id="profileSummary" class="profile-summary"></div>
+            <div class="notice"><b>Important</b><p>Reference values are editable draft data. Verify them against the exact product packaging/instructions before using results operationally. Strip colour matching is an estimate, not a certified analytical method.</p></div>
+            <label>Technician notes<textarea id="notes" rows="4" placeholder="Dip time, read time, sample appearance, observations..."></textarea></label>
+          </article>
+        </div>
+
+        <article class="panel capture-panel">
+          <div class="panel-head"><div><h2>Three-strip image capture</h2><p>Upload one reacted image for each replicate. Keep the strip flat and include all test pads.</p></div><span class="step">03</span></div>
+          <div class="replicate-grid" id="replicateGrid">
+            <div class="replicate-card" data-rep="1"><div class="rep-title"><b>Strip 1</b><span class="rep-status">Waiting for image</span></div><label class="upload-zone"><input type="file" accept="image/*" class="strip-file" data-rep="1"><span class="upload-icon">＋</span><b>Upload / capture image</b><small>JPG, PNG or camera image</small></label><div class="preview-wrap"><canvas id="canvas1"></canvas></div><div class="verification-result" id="verify1" aria-live="polite">Image verification will run after upload.</div><div class="rep-controls"><button class="btn small secondary analyze-one" data-rep="1">Analyze image</button><button class="btn small ghost clear-one" data-rep="1">Remove</button></div></div>
+            <div class="replicate-card" data-rep="2"><div class="rep-title"><b>Strip 2</b><span class="rep-status">Waiting for image</span></div><label class="upload-zone"><input type="file" accept="image/*" class="strip-file" data-rep="2"><span class="upload-icon">＋</span><b>Upload / capture image</b><small>JPG, PNG or camera image</small></label><div class="preview-wrap"><canvas id="canvas2"></canvas></div><div class="verification-result" id="verify2" aria-live="polite">Image verification will run after upload.</div><div class="rep-controls"><button class="btn small secondary analyze-one" data-rep="2">Analyze image</button><button class="btn small ghost clear-one" data-rep="2">Remove</button></div></div>
+            <div class="replicate-card" data-rep="3"><div class="rep-title"><b>Strip 3</b><span class="rep-status">Waiting for image</span></div><label class="upload-zone"><input type="file" accept="image/*" class="strip-file" data-rep="3"><span class="upload-icon">＋</span><b>Upload / capture image</b><small>JPG, PNG or camera image</small></label><div class="preview-wrap"><canvas id="canvas3"></canvas></div><div class="verification-result" id="verify3" aria-live="polite">Image verification will run after upload.</div><div class="rep-controls"><button class="btn small secondary analyze-one" data-rep="3">Analyze image</button><button class="btn small ghost clear-one" data-rep="3">Remove</button></div></div>
+          </div>
+          <div class="notice compact"><b>Automatic image gate:</b> each upload is screened for the Aquarium 7-in-1 strip pattern (a narrow aligned sequence of reagent pads) and image focus/exposure. Images that do not pass are blocked from colour analysis. This is a strict computer-vision screen, not a trained AI classifier; technician inspection remains mandatory.</div>
+          <div class="toolbar"><button class="btn primary" id="analyzeAll">Analyze all 3 strips</button><button class="btn secondary" id="resetTest">Reset test</button><span id="analysisStatus" class="muted">Upload all three images to begin.</span></div>
+        </article>
+
+        <article class="panel results-panel">
+          <div class="panel-head"><div><h2>Parameter comparison</h2><p>Review each replicate, correct uncertain matches and approve the final sample result.</p></div><span class="step">04</span></div>
+          <div id="resultsArea" class="empty-state">Results will appear after image analysis.</div>
+          <div class="toolbar"><button class="btn primary" id="saveRecord" disabled>Save test record</button><button class="btn secondary" id="downloadReport" disabled>Download report</button></div>
+        </article>
+      </section>
+
+      <section id="view-records" class="view hidden">
+        <div class="page-heading"><div><div class="eyebrow">WORKSPACE / 02</div><h1>Test records</h1><p>Previously saved tests on this browser.</p></div><button class="btn secondary" id="exportRecords">Export records JSON</button></div>
+        <article class="panel"><div id="recordsList" class="empty-state">No saved records yet.</div></article>
+      </section>
+
+      <section id="view-charts" class="view hidden">
+        <div class="page-heading"><div><div class="eyebrow">CONFIGURATION / 03</div><h1>Reference chart library</h1><p>Manage manufacturer/model profiles and colour reference levels.</p></div><button class="btn primary" id="newProfile">＋ New profile</button></div>
+        <div class="grid two">
+          <article class="panel"><div class="panel-head"><div><h2>Saved profiles</h2><p>Select a profile to inspect or edit.</p></div></div><div id="profileList"></div></article>
+          <article class="panel"><div class="panel-head"><div><h2>Profile editor</h2><p>Set parameter levels and representative colours.</p></div></div><div id="profileEditor" class="empty-state">Select a profile or create a new one.</div></article>
+        </div>
+        <div class="notice"><b>Chart setup guidance</b><p>Enter the exact concentration labels and colour values from the manufacturer's chart. The selected profile is transcribed from your Aquarium 7-in-1 bottle chart. Concentration labels and units match the supplied photographs. HEX colours are visual approximations from those photographs, not instrument-calibrated reference standards; edit/calibrate before relying on automatic colour matching.</p></div>
+        <article class="panel chart-photo-panel"><div class="panel-head"><div><h2>Original manufacturer chart photographs</h2><p>Reference images supplied for this Aquarium 7-in-1 profile.</p></div></div><div class="chart-photo-grid">
+          <figure><img src="assets/reference-charts/aquarium-7in1-chart-photo-1.jpeg" alt="Earlier Aquarium 7-in-1 bottle chart photograph one"><figcaption>Existing chart reference 1</figcaption></figure>
+          <figure><img src="assets/reference-charts/aquarium-7in1-chart-photo-2.jpeg" alt="Earlier Aquarium 7-in-1 bottle chart photograph two"><figcaption>Existing chart reference 2</figcaption></figure>
+          <figure><img src="assets/reference-charts/user-chart-photo-2026-11-06.jpeg" alt="New user-supplied bottle chart photograph"><figcaption>New chart reference · 6 Nov 2026</figcaption></figure>
+          <figure><img src="assets/reference-charts/user-chart-photo-2026-11-04-a.jpeg" alt="User-supplied bottle chart photograph A"><figcaption>New chart reference · 4 Nov 2026 (A)</figcaption></figure>
+          <figure><img src="assets/reference-charts/user-chart-photo-2026-11-04-b.jpeg" alt="User-supplied bottle chart photograph B"><figcaption>New chart reference · 4 Nov 2026 (B)</figcaption></figure>
+          <figure><img src="assets/reference-charts/user-reacted-strip-example.jpeg" alt="User-supplied reacted aquarium test strip example"><figcaption>Reacted strip example · pad order reference</figcaption></figure>
+        </div></article>
+      </section>
+
+      <section id="view-guide" class="view hidden">
+        <div class="page-heading"><div><div class="eyebrow">REFERENCE / 04</div><h1>How this prototype works</h1><p>Practical operating notes and limitations.</p></div></div>
+        <article class="panel guide">
+          <h2>Recommended workflow</h2>
+          <ol><li>Create or verify a manufacturer and model profile in Reference charts.</li><li>Enter sample details and select the matching profile.</li><li>Upload three separate reacted-strip images. Each image passes through the automatic strip-pattern and focus/exposure gate before analysis is enabled.</li><li>Run analysis. The prototype automatically detects seven aligned pad regions, samples the central ROI using median channel values and displays numbered markers for technician review. If all seven cannot be detected confidently, analysis is blocked.</li><li>Review pad colours, quality warnings and nearest chart matches and the top-three ΔE00 diagnostics. Correct pad positions or concentrations when needed.</li><li>Save the record and download the report.</li></ol>
+          <h2>Colour matching approach</h2><p>For each pad, the app samples the central region using median RGB channel values to reduce the influence of glare, edge shadows and isolated pixels. It converts the measured and reference sRGB colours to CIELAB (D65/2°), ranks all chart swatches using CIEDE2000 (ΔE00), and displays the three closest matches, best/second-best score and score gap. The score gap is diagnostic only; no universal confidence threshold is claimed. Different cameras, lighting, white balance, strip chemistry, reaction time and pad ageing can change the apparent colour.</p>
+          <h2>Validation required before deployment</h2><ul><li>Verify the digitized chart colours against controlled reference images and the package instructions.</li><li>Build a validation dataset using known concentrations and reference laboratory methods.</li><li>Determine repeatability, bias, detection limits and uncertainty for each parameter.</li><li>Do not use this prototype to certify drinking-water safety or replace BIS/NABL-aligned methods.</li><li>Local browser storage is not a secure multi-user database and does not sync between devices.</li></ul>
+        </article>
+      </section>
+    </main>
+  </div>
+  <script src="js/chart-manager.js"></script>
+  <script src="js/image-verifier.js"></script>
+  <script src="js/image-engine.js"></script>
+  <script src="js/colour-matcher.js"></script>
+  <script src="js/replicate-analysis.js"></script>
+  <script src="js/report-generator.js"></script>
+  <script src="js/script.js"></script>
+</body>
+</html>

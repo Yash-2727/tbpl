@@ -1,0 +1,20 @@
+TBPL v1.4.1 verification notes
+
+Automated checks performed:
+- Node.js syntax check passed for script.js, image-engine.js, colour-matcher.js and report-generator.js.
+- CIEDE2000 Sharma reference pair check: 2.04245968 (expected approximately 2.0425).
+- RGB-to-CIELAB red sRGB check: L*=53.2408, a*=80.0925, b*=67.2032.
+- Example matching test correctly flags an ambiguous pair when best and second-best ΔE00 scores differ by 0.030.
+
+Browser/manual checks still required:
+- Open index.html with Live Server and test all three upload cards.
+- Upload the same photograph in two replicate slots; the later duplicate should be blocked.
+- Upload three distinct strip photographs; all should be accepted if image verification passes.
+- Confirm the diagnostic view displays region counts, channel spread, top-three matches and review status.
+- Download a report and confirm match assessment and image fingerprints are present.
+
+Limitations:
+- Average-hash duplicate detection is a screening heuristic, not forensic proof.
+- The <1.0 ΔE00 gap is a provisional ambiguity-review trigger, not a validated analytical cutoff.
+- Chart HEX swatches remain photographic approximations until calibrated using controlled colour references.
+- Analytical concentration accuracy remains unvalidated until compared with suitable reference measurements.

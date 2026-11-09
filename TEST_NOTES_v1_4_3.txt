@@ -1,0 +1,5 @@
+Version 1.4.3 checks performed:
+- JavaScript syntax checked with Node.js for script.js, image-verifier.js and image-engine.js.
+- ZIP integrity checked after packaging.
+- Correct and upside-down reference photographs reviewed for expected manual marking workflow.
+- Automated browser interaction testing was not completed in this environment; please verify the manual marking controls in Live Server before field use.

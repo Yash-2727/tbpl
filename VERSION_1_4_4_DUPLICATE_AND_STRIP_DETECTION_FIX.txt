@@ -1,0 +1,18 @@
+THE BLUE PAPER LAB — Aquarium 7-in-1
+Version 1.4.5 — Exact-file duplicate screening and strip-detection reliability
+
+Changes:
+1. Removed whole-image perceptual-hash matching from duplicate decisions. This prevents a shared background, camera angle or common strip layout from making different uploads appear to be duplicates.
+2. Added exact source-file hashing: SHA-256 using Web Crypto where available, with a deterministic checksum fallback. Exact byte-identical uploads are flagged. Analyze All blocks only exact same-file repeats; different files with similar scenes/pad patterns are not blocked.
+3. Improved pale pad segmentation using a lower chroma threshold and higher detector working resolution.
+4. Relaxed pad geometry and image-quality thresholds modestly to handle more photo variation while retaining the seven-pad sequence checks.
+5. Added a dashed boundary around the detected seven-pad strip region and retained numbered pad markers for technician review.
+6. Preserved manual pad marking, orientation screening, CIEDE2000 matching, five-region median sampling, chart profile, UI, workflow, records and report generation.
+
+Important limitation:
+A normal photograph without a unique printed strip identifier cannot prove that two visually identical reacted strips are physically different. This version rejects only exact same-file repeats, not visually similar photographs. Automatic strip detection is still a heuristic and requires technician review. Concentration accuracy is not validated by this software update.
+
+Checks:
+- JavaScript syntax validation: passed.
+- ZIP integrity validation: to be completed after packaging.
+- Full end-to-end browser testing: not completed in this environment; user should test using Live Server.

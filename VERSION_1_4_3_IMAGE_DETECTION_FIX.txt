@@ -1,0 +1,23 @@
+THE BLUE PAPER LAB — Aquarium 7-in-1
+Version 1.4.3 — Image Detection & Manual Pad Marking Reliability Fix
+
+Purpose:
+Correct false rejection of valid strip photographs and false duplicate-photo warnings.
+
+Changes:
+- Relaxed the colour-component segmentation thresholds so pale/low-saturation pads are less likely to be missed.
+- Relaxed geometric sequence tolerances to handle small perspective/tilt variations while retaining seven-pad alignment and spacing checks.
+- Reduced the minimum focus and exposure gates slightly; visibly clear images can use technician-assisted pad marking.
+- Added a manual seven-pad marking fallback when automatic detection cannot locate all pads. Technician clicks the seven pad centres in manufacturer order (Nitrate to pH).
+- Added spacing, monotonic-order and alignment checks to manual pad marking to reduce accidental selection of unrelated points.
+- Orientation is still checked against the manufacturer profile. A clearly reversed sequence remains blocked. An inconclusive chart-based result can be confirmed by the technician after visual inspection.
+- Changed duplicate-photo screening from a coarse 8x8 hash with a strict blocking threshold to a 16x16 hash with an almost-identical advisory threshold. Similar-looking photos are no longer automatically blocked.
+- Duplicate similarity is now advisory only; separate replicate images can proceed after technician review.
+- Preserved the existing interface, CIEDE2000 engine, five-region sampling, chart profile, records, and report workflow.
+
+Important limitations:
+- Automatic detection remains a browser-side computer-vision heuristic, not a trained object detector.
+- Manual pad marking is a technician-assisted fallback and depends on the operator clicking the true pad centres in the correct parameter order.
+- Technician confirmation of orientation is recorded as a manual decision, not an automated proof.
+- The chart HEX colours remain visual approximations and require controlled calibration.
+- This update improves workflow robustness but does not establish analytical accuracy. Validate with known samples and appropriate instruments/reference methods.

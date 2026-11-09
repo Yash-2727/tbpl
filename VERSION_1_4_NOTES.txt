@@ -1,0 +1,26 @@
+THE BLUE PAPER LAB — Aquarium 7-in-1 Strip Analysis
+Version 1.4 — CIEDE2000 diagnostics and robust pad sampling
+
+Baseline: user's supplied v1.3 DeltaE2000 ZIP.
+Preserved: interface, workflow, image verification, seven-pad detection, profile editor, three replicates, local records and HTML reports.
+
+Changes:
+1. Robust median RGB extraction from the central ROI of each detected pad.
+2. CIEDE2000 top-three chart match ranking, best/second-best score and score gap.
+3. Expanded per-strip and per-parameter diagnostics in the app.
+4. Diagnostic tables included in downloaded HTML reports.
+5. Added the latest supplied bottle-chart photographs and reacted-strip example to the reference gallery.
+
+Caution:
+Chart HEX values remain visual approximations, not calibrated colour standards. ΔE00 is perceptual colour difference, not concentration accuracy. Validate each parameter against reference analytical measurements before operational decisions.
+
+
+Version 1.4.1 reliability update (November 2026)
+- Preserved the existing interface, navigation, three-replicate workflow, chart profiles and CIEDE2000 matcher.
+- Replaced one central sampling region with five small pad regions; each region gets a median RGB and the final pad colour is the median of region medians.
+- Added channel-spread and region-count diagnostics.
+- Added an 8x8 average-hash image fingerprint to flag exact/near-duplicate replicate uploads (Hamming distance <= 3). Duplicate replicate photos are blocked until replaced. This is a screening heuristic only.
+- Added a provisional ambiguity flag when the best and second-best ΔE00 scores differ by less than 1.0. This is not a validated accuracy threshold and must be calibrated with instrument-verified samples.
+- Added match assessment and replicate fingerprint details to downloadable reports.
+- Added explicit chart-calibration guidance. Existing HEX swatches remain approximate visual estimates from photographs; the application does not claim instrument-calibrated chart colours.
+- No chemical concentration accuracy claim is made. Validate against suitable reference methods/instrument readings before operational use.

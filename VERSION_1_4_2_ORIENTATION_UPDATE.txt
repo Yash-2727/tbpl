@@ -1,0 +1,27 @@
+THE BLUE PAPER LAB — Aquarium 7-in-1
+Version 1.4.2 — Strip Orientation Verification
+
+Changes:
+- Added a manufacturer-profile-aware orientation gate before colour analysis.
+- Compares the detected seven-pad sequence in normal and reversed order.
+- Blocks analysis when the reversed sequence clearly matches better (likely 180-degree upside-down upload).
+- Blocks analysis when orientation cannot be distinguished confidently.
+- Displays forward/reversed match scores and an actionable retake instruction.
+- Re-checks orientation immediately before analysis.
+- Saves orientation assessment with each replicate record.
+- Preserves the v1.4.1 UI, CIEDE2000 matching, robust sampling, duplicate-photo checks, and report workflow.
+
+Expected Aquarium 7-in-1 order (top to bottom):
+1. Nitrate (NO3)
+2. Nitrite (NO2)
+3. Chlorine (Cl2)
+4. Total Hardness (GH)
+5. Total Alkalinity (TA)
+6. Carbonate Hardness (KH)
+7. pH
+
+Important limitations:
+- Orientation decision is a conservative chart-colour consistency heuristic, not a trained visual classifier.
+- Current chart HEX colours are visual approximations, so ambiguous images are blocked rather than guessed.
+- The provisional score separation thresholds require validation with a labelled dataset of correctly oriented and upside-down strip photographs.
+- Technician visual review remains mandatory.

@@ -1,0 +1,1 @@
+Aquarium Test Strips 7-in-1 bottle chart supplied by the user. Reference levels are transcribed in js/chart-manager.js. HEX swatches are visual approximations and require controlled calibration; do not treat them as validated colour standards.

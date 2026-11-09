@@ -1,0 +1,28 @@
+THE BLUE PAPER LAB — Aquarium 7-in-1
+Version 1.4.5 — Adaptive Pad Detection Fix
+
+Purpose
+Address false failures in automatic pad detection on user-supplied photographs.
+
+Changes
+1. Replaced the very permissive pixel mask that treated tiny RGB channel differences
+   as pad pixels. That mask connected paper texture, shadows, strip substrate and
+   background into large components, causing the seven-pad detector to find zero
+   valid pad regions.
+2. Uses a chroma/saturation threshold to isolate coloured reagent-pad regions and
+   reduce background texture connections.
+3. Loosened component shape tolerances and improved duplicate-fragment suppression
+   before checking pad alignment and spacing.
+4. Lowered the image-focus threshold modestly while retaining exposure checks.
+5. Preserved the existing manual seven-pad marking fallback for pale/near-white
+   pads and strongly coloured backgrounds.
+
+Important limitation
+This remains a classical browser-side computer-vision heuristic, not a trained
+strip detector. Very pale pads, low-contrast images and strips on strongly coloured
+backgrounds may still require manual marking. The app must not guess pad locations
+or report a concentration if it cannot verify all seven positions.
+
+Validation notes
+JavaScript syntax and ZIP integrity checks are required. Browser validation with
+the complete user image set is still required before operational use.
